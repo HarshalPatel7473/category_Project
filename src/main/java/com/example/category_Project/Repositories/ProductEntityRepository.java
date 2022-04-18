@@ -10,4 +10,6 @@ import java.util.List;
 public interface ProductEntityRepository extends JpaRepository<ProductEntity,Long> {
     @Override
     List<ProductEntity> findAll();
+    public ProductEntity findByNameAndCategoryIdAndSubcategoryId(String name
+            ,Long categoryId,Long subcategoryId);
 }
