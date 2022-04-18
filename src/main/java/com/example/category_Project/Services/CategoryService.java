@@ -17,19 +17,24 @@ public class CategoryService {
 
     // CategoryPost(save)
 
-    public Category CategoryPost(Category category){
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setId(category.getId());
-        categoryEntity.setName(category.getName());
-        CategoryEntity categoryEntityResult = categoryEntityRepository.save(categoryEntity);
+    public Category categorySave(Category category){
+        CategoryEntity categoryEntitie = categoryEntityRepository.findByName(category.getName());
+        if(categoryEntitie == null){
+            CategoryEntity categoryEntity = new CategoryEntity();
+            categoryEntity.setId(category.getId());
+            categoryEntity.setName(category.getName());
+            CategoryEntity categoryEntityResult = categoryEntityRepository.save(categoryEntity);
 
-        Category category1 = new Category();
-        category1.setId(categoryEntityResult.getId());
-        category1.setName(categoryEntityResult.getName());
-        return category1;
+            Category category1 = new Category();
+            category1.setId(categoryEntityResult.getId());
+            category1.setName(categoryEntityResult.getName());
+            return category1;
+        }else{
+            return  null;
+        }
     }
     // GetAll
-    public List<Category> CategoryAllGet(){
+    public List<Category> categoryAllGet(){
         List<CategoryEntity> categoryEntityList = categoryEntityRepository.findAll();
 
         ArrayList<Category> categoryList = new ArrayList<>();
@@ -42,8 +47,8 @@ public class CategoryService {
         return categoryList;
     }
     //GetId
-    public Category CategoryGetId(Long Id){
-        CategoryEntity categoryEntity = categoryEntityRepository.getById(Id);
+    public Category categoryGetId(Long id){
+        CategoryEntity categoryEntity = categoryEntityRepository.getById(id);
 
         Category category = new Category();
         category.setId(categoryEntity.getId());
@@ -51,15 +56,15 @@ public class CategoryService {
         return category;
     }
     //DeleteALL
-    public void CategoryDeleteALL() {
+    public void categoryDeleteALL() {
         categoryEntityRepository.deleteAll();
     }
     //DeleteId
-    public void CategoryDeleteId(Long id) {
+    public void categoryDeleteId(Long id) {
         categoryEntityRepository.deleteById(id);
     }
     //Update
-    public Category CategoryUpdate(Category category,Long id){
+    public Category categoryUpdate(Category category, Long id){
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setId(id);
         categoryEntity.setName(category.getName());

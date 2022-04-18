@@ -14,6 +14,9 @@ public class SubcategoryService {
     SubcategoryEntityRepository subcategoryEntityRepository;
     //Post
     public Subcategory SubcategoryPost(Subcategory subcategory,Long CategoryId){
+       SubcategoryEntity subcategory2 =
+               subcategoryEntityRepository.findByNameAndCategoryId(subcategory.getName(),CategoryId);
+        if (subcategory2==null){
         SubcategoryEntity subcategoryEntity = new SubcategoryEntity();
         subcategoryEntity.setId(subcategory.getId());
         subcategoryEntity.setCategoryId(CategoryId);
@@ -25,9 +28,13 @@ public class SubcategoryService {
         subcategory1.setCategoryId(subcategoryEntityResult.getCategoryId());
         subcategory1.setName(subcategoryEntityResult.getName());
         return subcategory1;
+
+        }else {
+            return null;
+        }
     }
     //GetAll
-    public List<Subcategory> SubcategoryGeTAll(Long CategoryId){
+    public List<Subcategory> subcategoryGeTAll(Long CategoryId){
         List<SubcategoryEntity> subcategoryEntityList = subcategoryEntityRepository.findAll();
 
         ArrayList<Subcategory> subcategories = new ArrayList<>();
