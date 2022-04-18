@@ -10,4 +10,5 @@ import java.util.List;
 public interface CategoryEntityRepository extends JpaRepository<CategoryEntity,Long> {
     @Override
     List<CategoryEntity> findAll();
+    public CategoryEntity findByName(String name);
 }
