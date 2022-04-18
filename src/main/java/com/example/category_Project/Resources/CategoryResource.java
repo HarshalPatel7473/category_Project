@@ -16,33 +16,36 @@ public class CategoryResource {
     CategoryService categoryService;
 
     @PostMapping("Category")
-    public Category CategoryPost(@RequestBody Category category){
+    public ResponseEntity<Category> categoryPost(@RequestBody Category category){
         System.out.println("category:"+category);
-        Category categoryResult = categoryService.CategoryPost(category);
-        ResponseEntity.ok().body(categoryResult);
-        return categoryResult;
+        Category categoryResult = categoryService.categorySave(category);
+        if (categoryResult==null){
+            return ResponseEntity.badRequest().body(null);
+        }
+       return ResponseEntity.ok().body(categoryResult);
+
     }
     @GetMapping("Category")
-    public ResponseEntity<List<Category>> CategoryAllGet(){
-    List<Category> categoryResult = categoryService.CategoryAllGet();
+    public ResponseEntity<List<Category>> categoryAllGet(){
+    List<Category> categoryResult = categoryService.categoryAllGet();
     return ResponseEntity.ok().body(categoryResult);
     }
     @GetMapping("Category/{Id}")
-    public ResponseEntity<Category> CategoryGetId(@PathVariable("Id")Long Id){
-        Category categoryResult = categoryService.CategoryGetId(Id);
+    public ResponseEntity<Category> categoryGetId(@PathVariable("Id")Long Id){
+        Category categoryResult = categoryService.categoryGetId(Id);
         return ResponseEntity.ok().body(categoryResult);
     }
     @DeleteMapping("Category")
-    public void CategoryDeleteALL(){
-            categoryService.CategoryDeleteALL();
+    public void categoryDeleteALL(){
+            categoryService.categoryDeleteALL();
     }
     @DeleteMapping("Category/{id}")
-    public void CategoryDeleteId(@PathVariable("id")Long id){
-        categoryService.CategoryDeleteId(id);
+    public void categoryDeleteId(@PathVariable("id")Long id){
+        categoryService.categoryDeleteId(id);
     }
     @PutMapping("Category/{id}")
-    public Category CategoryUpdate(@RequestBody Category category,@PathVariable("id")Long id){
-        Category categoryResult = categoryService.CategoryUpdate(category,id);
+    public Category categoryUpdate(@RequestBody Category category,@PathVariable("id")Long id){
+        Category categoryResult = categoryService.categoryUpdate(category,id);
         ResponseEntity.ok().body(categoryResult);
         return categoryResult;
     }

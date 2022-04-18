@@ -15,32 +15,35 @@ public class SubcategoryResource {
     SubcategoryService subcategoryService;
 
     @PostMapping("Subcategory/{CategoryId}")
-    public ResponseEntity<Subcategory> SubcategoryPost(@RequestBody Subcategory subcategory,
+    public ResponseEntity<Subcategory> subcategoryPost(@RequestBody Subcategory subcategory,
                                 @PathVariable("CategoryId")Long CategoryId){
     Subcategory subcategoryResult = subcategoryService.SubcategoryPost(subcategory,CategoryId);
+    if (subcategoryResult==null){
+       return ResponseEntity.badRequest().body(null);
+    }
       return ResponseEntity.ok().body(subcategoryResult);
     }
     @GetMapping("Subcategory/{CategoryId}")
-    public ResponseEntity<List<Subcategory>> SubcategoryGeTAll(@PathVariable("CategoryId")Long CategoryId){
-        List<Subcategory> subcategoryList = subcategoryService.SubcategoryGeTAll(CategoryId);
+    public ResponseEntity<List<Subcategory>> subcategoryGeTAll(@PathVariable("CategoryId")Long CategoryId){
+        List<Subcategory> subcategoryList = subcategoryService.subcategoryGeTAll(CategoryId);
         return ResponseEntity.ok().body(subcategoryList);
     }
     @GetMapping("Subcategory/{Id}/{CategoryId}")
-    public ResponseEntity<Subcategory> SubcategoryGetId(@PathVariable("Id")Long Id,
+    public ResponseEntity<Subcategory> subcategoryGetId(@PathVariable("Id")Long Id,
                                  @PathVariable("CategoryId")Long CategoryId){
       Subcategory subcategory = subcategoryService.SubcategoryGetId(Id,CategoryId);
       return ResponseEntity.ok().body(subcategory);
     }
     @DeleteMapping("Subcategory")
-    public void SubcategoryDeleteAll(){
+    public void subcategoryDeleteAll(){
         subcategoryService.SubcategoryDeleteAll();
     }
     @DeleteMapping("Subcategory/{id}")
-    public void SubcategoryDeleteId(@PathVariable("id")Long id){
+    public void subcategoryDeleteId(@PathVariable("id")Long id){
         subcategoryService.SubcategoryDeleteId(id);
     }
     @PutMapping("Subcategory/{Id}/{CategoryId}")
-    public ResponseEntity<Subcategory> SubcategoryUpdate(@RequestBody Subcategory subcategory,
+    public ResponseEntity<Subcategory> subcategoryUpdate(@RequestBody Subcategory subcategory,
                                                          @PathVariable("Id")Long Id,
                                                        @PathVariable("CategoryId")Long CategoryId){
         Subcategory subcategoryResult = subcategoryService.SubcategoryUpdate(subcategory,Id,CategoryId);

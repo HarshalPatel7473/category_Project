@@ -5,8 +5,6 @@ import com.example.category_Project.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.Id;
 import java.util.List;
 
 @RestController
@@ -15,40 +13,43 @@ public class ProductResource {
     @Autowired
     ProductService productService;
     @PostMapping("Product/{CategoryId}/{SubcategoryId}")
-    public ResponseEntity<Product> ProductPost(@RequestBody Product product,
+    public ResponseEntity<Product> productPost(@RequestBody Product product,
                             @PathVariable("CategoryId")Long CategoryId,
                             @PathVariable("SubcategoryId")Long SubcategoryId){
-        Product productResult = productService.ProductPost(product,CategoryId,SubcategoryId);
+        Product productResult = productService.productPost(product,CategoryId,SubcategoryId);
+        if (productResult==null){
+            return ResponseEntity.badRequest().body(null);
+        }
         return ResponseEntity.ok().body(productResult);
     }
     @PutMapping("Product/{Id}/{CategoryId}/{SubcategoryId}")
-    public ResponseEntity<Product> ProductUpdate(@RequestBody Product product,
+    public ResponseEntity<Product> productUpdate(@RequestBody Product product,
                                                @PathVariable("CategoryId")Long Id,
                                                @PathVariable("CategoryId")Long CategoryId,
                                                @PathVariable("SubcategoryId")Long SubcategoryId){
-        Product productResult = productService.ProductUpdate(product,Id,CategoryId,SubcategoryId);
+        Product productResult = productService.productUpdate(product,Id,CategoryId,SubcategoryId);
         return ResponseEntity.ok().body(productResult);
     }
     @GetMapping("Product/{CategoryId}/{SubcategoryId}")
-    public ResponseEntity<List<Product>> ProductGetAll(@PathVariable("CategoryId")Long CategoryId,
+    public ResponseEntity<List<Product>> productGetAll(@PathVariable("CategoryId")Long CategoryId,
                                 @PathVariable("SubcategoryId")Long SubcategoryId){
-        List<Product> productList = productService.ProductGetAll(CategoryId,SubcategoryId);
+        List<Product> productList = productService.productGetAll(CategoryId,SubcategoryId);
         return ResponseEntity.ok().body(productList);
     }
     @GetMapping("Product/{Id}/{CategoryId}/{SubcategoryId}")
-    public ResponseEntity<Product> ProductGetId(@PathVariable("Id")Long Id,
+    public ResponseEntity<Product> productGetId(@PathVariable("Id")Long Id,
                              @PathVariable("CategoryId")Long CategoryId,
                              @PathVariable("SubcategoryId")Long SubcategoryId){
-        Product product = productService.ProductGetId(Id,CategoryId,SubcategoryId);
+        Product product = productService.productGetId(Id,CategoryId,SubcategoryId);
         return ResponseEntity.ok().body(product);
     }
     @DeleteMapping("Product")
-    public void ProductDeleteAll(){
-        productService.ProductDeleteAll();
+    public void productDeleteAll(){
+        productService.productDeleteAll();
     }
 
     @DeleteMapping("Product/{Id}")
-    public void ProductDeleteId(@PathVariable("Id")Long Id){
-        productService.ProductDeleteId(Id);
+    public void productDeleteId(@PathVariable("Id")Long Id){
+        productService.productDeleteId(Id);
     }
 }
