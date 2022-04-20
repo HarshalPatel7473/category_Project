@@ -46,6 +46,8 @@ public class ProductService {
     }
     //Update
     public Product productUpdate(Product product, Long Id, Long CategoryId, Long SubcategoryId){
+       //List<ProductEntity> productEntitySearch = productEntityRepository.search(product.getName());
+       //if (productEntitySearch==null){}
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(Id);
         productEntity.setCategoryId(CategoryId);
@@ -67,11 +69,11 @@ public class ProductService {
         product1.setWeight(productEntityResult.getWeight());
         product1.setUnitOfMeasure(productEntityResult.getUnitOfMeasure());
         return product1;
-    }
+    }//else {return null;}
     //GetAll
     public List<Product> productGetAll(Long CategoryId, Long SubcategoryId){
-        List<ProductEntity> productEntityList = productEntityRepository.findAll();
 
+        List<ProductEntity> productEntityList = productEntityRepository.findAll();
         ArrayList<Product> products = new ArrayList<>();
         productEntityList.forEach(productEntity -> {
             Product product = new Product();
